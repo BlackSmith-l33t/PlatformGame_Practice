@@ -41,7 +41,7 @@ public class PlayerMover : MonoBehaviour
         Vector2 startVec = new Vector2(transform.position.x, transform.position.y);
         RaycastHit2D hit = Physics2D.Raycast(startVec, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));
 
-        Debug.DrawRay(startVec, Vector2.down * 1.5f, new Color(0, 0, 1));
+        Debug.DrawRay(startVec, Vector2.down * 1.5f, new Color(0, 1, 0));
         if (null != hit.collider)
         {
             Debug.Log(hit.collider.name);

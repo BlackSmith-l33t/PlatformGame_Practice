@@ -20,7 +20,7 @@ public class Monster : MonoBehaviour
     {
         Vector2 startVec = new Vector2(transform.position.x, transform.position.y);
         RaycastHit2D hit = Physics2D.Raycast(startVec, Vector2.down, 1.2f, LayerMask.GetMask("Ground"));
-        Debug.DrawRay(startVec, Vector2.down * 1.2f, new Color(0, 0, 1));
+        Debug.DrawRay(startVec, Vector2.down * 1.2f, new Color(0, 1, 0));
 
         if (null != hit.collider)
         {
