@@ -77,4 +77,22 @@ public class PlayerMover : MonoBehaviour
         vSpeed = rigid.velocity.y;
         anim.SetFloat("vSpeed", vSpeed);
     }
+
+    private void Attack(Monster monster)
+    {
+        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        monster.Die();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Monster")
+        {
+            if (transform.position.y > collision.transform.position.y + 0.5f)
+            {
+                Monster monster = collision.gameObject.GetComponent<Monster>();
+                Attack(monster); 
+            }
+        }
+    }
 }

@@ -16,32 +16,34 @@ public class Monster : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    public void Idle()
+    private void FixedUpdate()
     {
-        StartCoroutine(IdlePatten());
+        Vector2 startVec = new Vector2(transform.position.x, transform.position.y);
+        RaycastHit2D hit = Physics2D.Raycast(startVec, Vector2.down, 1.2f, LayerMask.GetMask("Ground"));
+        Debug.DrawRay(startVec, Vector2.down * 1.2f, new Color(0, 0, 1));
+
+        if (null != hit.collider)
+        {
+            anim.SetBool("bJump", false);
+        }
+        else
+        {
+            anim.SetBool("bJump", true);
+        }
     }
+
     public void Jump()
     {
-        StartCoroutine(JumpPatten());
-    }
-    IEnumerator IdlePatten()
-    {
-        yield return new WaitForSeconds(3.0f);
-        anim.SetBool("bJump", true);
-        yield return null;
+        rigid.velocity = new Vector2(-1, 1) * jumpPower;
     }
 
-    IEnumerator JumpPatten()
+    public void Die()
     {
-        rigid.AddForce(new Vector2(-1, 1) * jumpPower, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(1.0f);
-        //anim.SetBool("bJump", false);
-        //yield return null;
+        anim.SetTrigger("Die");
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnEndDieEffect()
     {
-        Debug.Log("OnCollisionEnter");
-        anim.SetBool("bJump", false);
+        Destroy(gameObject);
     }
 }
